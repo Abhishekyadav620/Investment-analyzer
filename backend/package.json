@@ -1,9 +1,21 @@
 {
+  "name": "investai-backend",
+  "version": "1.0.0",
+  "description": "AI Investment Research Agent - Backend API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
   "dependencies": {
+    "@langchain/google-genai": "^2.2.0",
+    "@tavily/core": "^0.7.6",
     "axios": "^1.18.1",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "langchain": "^1.5.2",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import axios from "axios";
 import BackgroundEffects from "../components/BackgroundEffects";
+import { saveInvestmentReport } from "../utils/reportStorage";
 
 const steps = [
   "Fetching financial data",
@@ -18,6 +19,8 @@ const Loading = () => {
   const [currentStep, setCurrentStep] = useState(0);
 
   useEffect(() => {
+    console.log("Loading location.state.company:", company);
+
     if (!company) {
       navigate("/");
       return;
@@ -29,15 +32,48 @@ const Loading = () => {
 
     const analyze = async () => {
       try {
-        const { data } = await axios.post("http://localhost:5000/api/analyze", {
+        const { data } = await axios.post(
+          "http://localhost:5000/api/analyze",
+          {
+            company,
+          }
+        );
+
+        const report = data.report;
+        const analysis = data.analysis;
+
+        console.log("Backend Response:", data);
+        console.log("Analysis:", analysis);
+
+        saveInvestmentReport({
           company,
+          report,
+          analysis,
         });
-        navigate("/report", { state: { company, report: data.report } });
-      } catch {
+
         navigate("/report", {
           state: {
             company,
-            report: `# ${company} — Analysis Unavailable\n\nThe backend server is not running. Start the backend and try again.`,
+            report,
+            analysis,
+          },
+        });
+      } catch (error) {
+        console.error(error);
+
+        const report = `# ${company} — Analysis Unavailable
+
+The backend server is not running. Start the backend and try again.`;
+
+        saveInvestmentReport({
+          company,
+          report,
+        });
+
+        navigate("/report", {
+          state: {
+            company,
+            report,
             error: true,
           },
         });
@@ -52,23 +88,34 @@ const Loading = () => {
   return (
     <div className="theme-transition bg-page relative min-h-screen overflow-hidden">
       <BackgroundEffects />
+
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6">
         <Loader2 className="text-brand mb-8 animate-spin" size={48} />
+
         <h1 className="text-primary mb-2 text-3xl font-bold">
-          Analyzing <span className="hero-gradient-text">{company}</span>
+          Analyzing{" "}
+          <span className="hero-gradient-text">{company}</span>
         </h1>
-        <p className="text-secondary mb-10">This may take a moment...</p>
+
+        <p className="text-secondary mb-10">
+          This may take a moment...
+        </p>
+
         <ul className="w-full max-w-md space-y-3">
           {steps.map((step, index) => (
             <li
               key={step}
               className={`theme-transition flex items-center gap-3 rounded-xl border px-4 py-3 ${
-                index <= currentStep ? "step-active" : "step-idle"
+                index <= currentStep
+                  ? "step-active"
+                  : "step-idle"
               }`}
             >
               <span
                 className={`h-2 w-2 rounded-full ${
-                  index <= currentStep ? "bg-[var(--brand)]" : "bg-[var(--border-default)]"
+                  index <= currentStep
+                    ? "bg-[var(--brand)]"
+                    : "bg-[var(--border-default)]"
                 }`}
               />
               {step}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Search, Sparkles } from "lucide-react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import ExampleCompanies from "./ExampleCompanies";
 
 const SearchBar = () => {
@@ -9,6 +9,7 @@ const SearchBar = () => {
 
   const handleSubmit = () => {
     if (company.trim() === "") return;
+    console.log("SearchBar navigating to /loading", { company: company.trim() });
     navigate("/loading", { state: { company: company.trim() } });
   };
 

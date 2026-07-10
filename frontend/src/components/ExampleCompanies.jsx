@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 const companies = [
   { name: "Apple", domain: "apple.com" },
@@ -17,6 +17,8 @@ const ExampleCompanies = () => {
     navigate("/loading", { state: { company: name } });
   };
 
+  const getBadgeLabel = (name) => name.charAt(0).toUpperCase();
+
   return (
     <div id="examples">
       <p className="text-secondary mb-3 text-sm font-medium">Try these companies</p>
@@ -28,11 +30,9 @@ const ExampleCompanies = () => {
             onClick={() => handleSelect(company.name)}
             className="theme-transition bg-chip text-primary flex items-center gap-2 rounded-xl border border-default px-4 py-2 text-base shadow-sm transition hover:shadow-md"
           >
-            <img
-              src={`https://www.google.com/s2/favicons?domain=${company.domain}&sz=32`}
-              alt=""
-              className="h-4 w-4"
-            />
+              <span className="bg-brand/15 text-brand flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold">
+                {getBadgeLabel(company.name)}
+              </span>
             {company.name}
           </button>
         ))}
