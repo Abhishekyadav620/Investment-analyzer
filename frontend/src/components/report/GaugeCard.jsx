@@ -1,72 +1,131 @@
 import { motion } from "framer-motion";
-import { PolarAngleAxis, RadialBar, RadialBarChart, ResponsiveContainer } from "recharts";
 
-const gaugeStops = [
-  { name: "Strong Sell", value: 20, fill: "#FEE2E2" },
-  { name: "Sell", value: 20, fill: "#FECACA" },
-  { name: "Hold", value: 20, fill: "#FDE68A" },
-  { name: "Buy", value: 20, fill: "#BBF7D0" },
-  { name: "Strong Buy", value: 20, fill: "#86EFAC" },
-];
-
-const recommendationToIndex = {
-  "STRONG SELL": 0,
-  SELL: 1,
-  HOLD: 2,
-  BUY: 3,
-  "STRONG BUY": 4,
+const recommendationAngles = {
+  "STRONG SELL": -90,
+  SELL: -45,
+  HOLD: 0,
+  BUY: 45,
+  "STRONG BUY": 90,
 };
 
 const GaugeCard = ({ recommendation = "HOLD" }) => {
-  const activeIndex = recommendationToIndex[recommendation] ?? 2;
-  const activeSegment = gaugeStops[activeIndex];
+  const angle =
+    recommendationAngles[
+      recommendation.toUpperCase()
+    ] ?? 0;
 
   return (
     <motion.section
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.5, ease: "easeOut", delay: 0.08 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
       className="rounded-[24px] border border-[#F1E6DE] bg-white p-6 shadow-[0_18px_40px_rgba(17,24,39,0.05)]"
     >
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6B7280]">Recommendation Gauge</p>
-          <p className="mt-2 text-2xl font-semibold text-[#111827]">{recommendation || "HOLD"}</p>
-        </div>
-      </div>
+      <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6B7280]">
+        Recommendation Gauge
+      </p>
 
-      <div className="relative mt-4 h-[220px] w-full">
-        <ResponsiveContainer width="100%" height="100%">
-          <RadialBarChart
-            innerRadius="72%"
-            outerRadius="100%"
-            data={gaugeStops}
-            startAngle={180}
-            endAngle={0}
-            barSize={22}
+      <h2 className="mt-2 text-3xl font-bold text-[#111827]">
+        {recommendation}
+      </h2>
+
+      <div className="mt-8 flex justify-center">
+        <div className="relative w-[340px] h-[220px]">
+
+          {/* Gauge */}
+          <svg
+            viewBox="0 0 300 180"
+            className="w-full h-full"
           >
-            <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
-            <RadialBar dataKey="value" cornerRadius={999} clockWise />
-          </RadialBarChart>
-        </ResponsiveContainer>
+            {/* Strong Sell */}
+            <path
+              d="M40 150 A110 110 0 0 1 82 72"
+              stroke="#FCA5A5"
+              strokeWidth="16"
+              fill="none"
+              strokeLinecap="round"
+            />
 
-        <motion.div
-          initial={{ rotate: -90 }}
-          animate={{ rotate: -90 + activeIndex * 36 + 18 }}
-          transition={{ type: "spring", stiffness: 90, damping: 16 }}
-          className="pointer-events-none absolute left-1/2 top-[56%] h-[92px] w-[4px] origin-bottom rounded-full bg-[#111827] shadow-[0_8px_20px_rgba(17,24,39,0.2)]"
-          style={{ marginLeft: -2 }}
-        >
-          <span className="absolute -top-2 left-1/2 h-5 w-5 -translate-x-1/2 rounded-full border-4 border-white bg-[#FF6B2C] shadow-[0_8px_18px_rgba(255,107,44,0.25)]" />
-        </motion.div>
+            {/* Sell */}
+            <path
+              d="M82 72 A110 110 0 0 1 128 45"
+              stroke="#FECACA"
+              strokeWidth="16"
+              fill="none"
+              strokeLinecap="round"
+            />
 
-        <div className="absolute inset-x-4 bottom-0 flex justify-between text-[11px] font-semibold uppercase tracking-[0.16em] text-[#6B7280]">
-          {gaugeStops.map((item) => (
-            <span key={item.name} className={item.name === activeSegment.name ? "text-[#111827]" : ""}>
-              {item.name}
-            </span>
-          ))}
+            {/* Hold */}
+            <path
+              d="M128 45 A110 110 0 0 1 172 45"
+              stroke="#FDE68A"
+              strokeWidth="16"
+              fill="none"
+              strokeLinecap="round"
+            />
+
+            {/* Buy */}
+            <path
+              d="M172 45 A110 110 0 0 1 218 72"
+              stroke="#BBF7D0"
+              strokeWidth="16"
+              fill="none"
+              strokeLinecap="round"
+            />
+
+            {/* Strong Buy */}
+            <path
+              d="M218 72 A110 110 0 0 1 260 150"
+              stroke="#86EFAC"
+              strokeWidth="16"
+              fill="none"
+              strokeLinecap="round"
+            />
+          </svg>
+
+          {/* Needle */}
+          <motion.div
+            initial={{ rotate: -90 }}
+            animate={{ rotate: angle }}
+            transition={{
+              type: "spring",
+              stiffness: 90,
+              damping: 12,
+            }}
+            className="absolute left-1/2 bottom-[34px] origin-bottom"
+            style={{
+              width: "4px",
+              height: "105px",
+              marginLeft: "-2px",
+              background: "#111827",
+              borderRadius: "999px",
+            }}
+          >
+            <div
+              className="absolute -top-2 left-1/2 h-5 w-5 rounded-full border-4 border-white bg-[#FF6B2C]"
+              style={{
+                transform: "translateX(-50%)",
+              }}
+            />
+          </motion.div>
+
+          {/* Center circle */}
+          <div
+            className="absolute left-1/2 bottom-[28px] h-5 w-5 rounded-full bg-[#111827]"
+            style={{
+              transform: "translateX(-50%)",
+            }}
+          />
+
+          {/* Labels */}
+          <div className="absolute bottom-0 left-0 right-0 flex justify-between text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6B7280]">
+            <span>Strong Sell</span>
+            <span>Sell</span>
+            <span>Hold</span>
+            <span>Buy</span>
+            <span>Strong Buy</span>
+          </div>
         </div>
       </div>
     </motion.section>
