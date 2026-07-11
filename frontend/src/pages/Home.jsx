@@ -1,8 +1,10 @@
+import { AnimatePresence } from "framer-motion";
 import Navbar from "../components/Navbar";
 import HeroSection from "../components/HeroSection";
 import FeatureCard from "../components/FeatureCard";
 import BackgroundEffects from "../components/BackgroundEffects";
 import StatsBar from "../components/StatsBar";
+import LoginRequiredModal from "../components/LoginRequiredModal";
 
 const Home = () => {
   return (
@@ -14,6 +16,10 @@ const Home = () => {
         <FeatureCard />
       </main>
       <StatsBar />
+      
+      <AnimatePresence>
+        <LoginRequiredModal />
+      </AnimatePresence>
     </div>
   );
 };

@@ -7,9 +7,9 @@
 /* ── Light theme (default) ── */
 :root,
 [data-theme="light"] {
-  --bg-page: #fafafc;
+  --bg-page: #FFF9F5;
   --bg-nav: rgba(255, 255, 255, 0.88);
-  --bg-card: #ffffff;
+  --bg-card: #FFF8F2;
   --bg-badge: #fff7ed;
   --bg-input: #ffffff;
   --bg-chip: #ffffff;
@@ -30,8 +30,8 @@
   --text-stats: #f8fafc;
   --text-stats-sub: #94a3b8;
 
-  --border-default: #e5e7eb;
-  --border-card: #f1f5f9;
+  --border-default: #FFD8C4;
+  --border-card: #FFD8C4;
   --border-badge: #ffedd5;
   --border-step-active: #fed7aa;
   --border-toggle: #e5e7eb;
@@ -132,24 +132,31 @@ body {
 .bg-page {
   background-color: var(--bg-page);
 }
+
 .bg-nav {
   background-color: var(--bg-nav);
 }
+
 .bg-card {
   background-color: var(--bg-card);
 }
+
 .bg-badge {
   background-color: var(--bg-badge);
 }
+
 .bg-input {
   background-color: var(--bg-input);
 }
+
 .bg-chip {
   background-color: var(--bg-chip);
 }
+
 .bg-stats {
   background-color: var(--bg-stats);
 }
+
 .bg-stats-icon {
   background-color: var(--bg-stats-icon);
 }
@@ -157,15 +164,19 @@ body {
 .text-primary {
   color: var(--text-primary);
 }
+
 .text-secondary {
   color: var(--text-secondary);
 }
+
 .text-brand {
   color: var(--brand);
 }
+
 .text-stats {
   color: var(--text-stats);
 }
+
 .text-stats-sub {
   color: var(--text-stats-sub);
 }
@@ -173,9 +184,11 @@ body {
 .border-default {
   border-color: var(--border-default);
 }
+
 .border-card {
   border-color: var(--border-card);
 }
+
 .border-badge {
   border-color: var(--border-badge);
 }
@@ -221,12 +234,15 @@ body {
 .icon-bg-brand {
   background-color: var(--bg-icon-brand);
 }
+
 .icon-bg-purple {
   background-color: var(--bg-icon-purple);
 }
+
 .icon-bg-green {
   background-color: var(--bg-icon-green);
 }
+
 .icon-bg-red {
   background-color: var(--bg-icon-red);
 }
@@ -234,12 +250,15 @@ body {
 .link-brand {
   color: var(--brand);
 }
+
 .link-purple {
   color: var(--accent-purple);
 }
+
 .link-green {
   color: var(--accent-green);
 }
+
 .link-red {
   color: var(--accent-red);
 }
@@ -247,21 +266,26 @@ body {
 .icon-brand {
   color: var(--brand);
 }
+
 .icon-purple {
   color: var(--accent-purple);
 }
+
 .icon-green {
   color: var(--accent-green);
 }
+
 .icon-red {
   color: var(--accent-red);
 }
 
 @keyframes float-slow {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-8px);
   }
