@@ -5,6 +5,9 @@ import axios from "axios";
 import BackgroundEffects from "../components/BackgroundEffects";
 import { saveInvestmentReport } from "../utils/reportStorage";
 
+const API_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 const steps = [
   "Fetching financial data",
   "Scanning latest news",
@@ -27,13 +30,15 @@ const Loading = () => {
     }
 
     const stepInterval = setInterval(() => {
-      setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev));
+      setCurrentStep((prev) =>
+        prev < steps.length - 1 ? prev + 1 : prev
+      );
     }, 1500);
 
     const analyze = async () => {
       try {
         const { data } = await axios.post(
-          "http://localhost:5000/api/analyze",
+          `${API_URL}/api/analyze`,
           {
             company,
           }
@@ -59,11 +64,18 @@ const Loading = () => {
           },
         });
       } catch (error) {
-        console.error(error);
+        console.error("Analysis Error:", error);
+
+        let errorMessage =
+          "Unable to connect to the InvestAI backend. Please try again later.";
+
+        if (error.response?.data?.message) {
+          errorMessage = error.response.data.message;
+        }
 
         const report = `# ${company} — Analysis Unavailable
 
-The backend server is not running. Start the backend and try again.`;
+${errorMessage}`;
 
         saveInvestmentReport({
           company,
@@ -93,8 +105,7 @@ The backend server is not running. Start the backend and try again.`;
         <Loader2 className="text-brand mb-8 animate-spin" size={48} />
 
         <h1 className="text-primary mb-2 text-3xl font-bold">
-          Analyzing{" "}
-          <span className="hero-gradient-text">{company}</span>
+          Analyzing <span className="hero-gradient-text">{company}</span>
         </h1>
 
         <p className="text-secondary mb-10">
@@ -106,9 +117,7 @@ The backend server is not running. Start the backend and try again.`;
             <li
               key={step}
               className={`theme-transition flex items-center gap-3 rounded-xl border px-4 py-3 ${
-                index <= currentStep
-                  ? "step-active"
-                  : "step-idle"
+                index <= currentStep ? "step-active" : "step-idle"
               }`}
             >
               <span
