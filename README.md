@@ -146,3 +146,18 @@ npm run dev
 6. Google Gemini generates an AI-powered investment analysis.
 7. The backend formats the response and sends it to the frontend.
 8. The frontend displays the investment report with recommendation, SWOT analysis, risks, strengths, valuation, and confidence score.
+
+
+## Key Decisions & Trade-offs
+
+### Key Decisions
+
+- Used **Google Gemini** as the Large Language Model (LLM) for generating comprehensive investment research reports due to its strong reasoning and summarization capabilities.
+- Integrated **Finnhub API** to fetch structured financial fundamentals and **Tavily API** to retrieve the latest company news, ensuring that recommendations are based on both financial metrics and recent market developments.
+- Implemented **JWT Authentication** and **Google OAuth** to secure the application and restrict AI-powered analysis to authenticated users.
+
+### Trade-offs
+
+- Portfolio management and watchlist features were not implemented to keep the project focused on AI-powered investment research.
+- Historical stock charts and advanced financial visualizations were left out due to the assignment timeline.
+- Report caching and advanced rate limiting were identified as future improvements but were not implemented in the current version.
