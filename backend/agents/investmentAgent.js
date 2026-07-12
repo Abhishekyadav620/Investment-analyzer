@@ -36,6 +36,9 @@ const investmentAnalysisSchema = z.object({
     moat: z.number().int().min(0).max(100),
     management: z.number().int().min(0).max(100),
     innovation: z.number().int().min(0).max(100),
+    profitability: z.number().int().min(0).max(100),
+    marketSentiment: z.number().int().min(0).max(100),
+    technicalAnalysis: z.number().int().min(0).max(100),
   }),
 
   summary: z.string(),
@@ -149,6 +152,9 @@ const normalizeAnalysis = (analysis, financialData, companyName) => {
       moat: Number(analysis?.scoreBreakdown?.moat) || 60,
       management: Number(analysis?.scoreBreakdown?.management) || 60,
       innovation: Number(analysis?.scoreBreakdown?.innovation) || 60,
+      profitability: Number(analysis?.scoreBreakdown?.profitability) || 60,
+      marketSentiment: Number(analysis?.scoreBreakdown?.marketSentiment) || 60,
+      technicalAnalysis: Number(analysis?.scoreBreakdown?.technicalAnalysis) || 60,
     },
 
     summary: analysis.summary || "Not Available",

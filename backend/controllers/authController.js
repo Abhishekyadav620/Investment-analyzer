@@ -152,33 +152,8 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-/**
- * @desc    Google OAuth success callback
- * @route   GET /api/auth/google/callback
- * @access  Public
- */
-const googleAuthSuccess = (req, res) => {
-  try {
-    // Generate JWT token for the authenticated user
-    const token = generateToken(req.user._id);
-    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
-    const params = new URLSearchParams({
-      token,
-      name: req.user.name,
-      email: req.user.email,
-    });
-
-    // Redirect to frontend with token
-    res.redirect(`${frontendUrl}/auth?${params.toString()}`);
-  } catch (error) {
-    console.error("Google auth success error:", error.message);
-    res.redirect(`${process.env.FRONTEND_URL || "http://localhost:5173"}/auth?error=server_error`);
-  }
-};
-
 module.exports = {
   registerUser,
   authUser,
   getUserProfile,
-  googleAuthSuccess,
 };

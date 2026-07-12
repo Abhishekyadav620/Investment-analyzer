@@ -58,7 +58,10 @@ Return EXACTLY this JSON structure:
     "risk": 65,
     "moat": 95,
     "management": 88,
-    "innovation": 92
+    "innovation": 92,
+    "profitability": 80,
+    "marketSentiment": 75,
+    "technicalAnalysis": 70
   }},
 
   "summary": "",
@@ -107,6 +110,9 @@ Risk
 Moat
 Management
 Innovation
+Profitability
+Market Sentiment
+Technical Analysis
 
 Each score should be different and based on the supplied evidence.
 

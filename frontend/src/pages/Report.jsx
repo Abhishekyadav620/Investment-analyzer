@@ -15,6 +15,12 @@ import Timeline from "../components/report/Timeline";
 import ProsCons from "../components/report/ProsCons";
 import AIAccordion from "../components/report/AIAccordion";
 import RecommendationCard from "../components/report/RecommendationCard";
+import GrowthAnalysis from "../components/report/GrowthAnalysis";
+import ProfitabilityAnalysis from "../components/report/ProfitabilityAnalysis";
+import FinancialHealth from "../components/report/FinancialHealth";
+import RiskAssessment from "../components/report/RiskAssessment";
+import MarketSentiment from "../components/report/MarketSentiment";
+import TechnicalAnalysis from "../components/report/TechnicalAnalysis";
 import parseInvestmentReport from "../components/report/parseInvestmentReport";
 import { readInvestmentReport, saveInvestmentReport } from "../utils/reportStorage";
 
@@ -24,6 +30,7 @@ const tabs = [
   { id: "news", label: "News" },
   { id: "risks", label: "Risks" },
   { id: "valuation", label: "Valuation" },
+  { id: "analytics", label: "Analytics" },
   { id: "ai-analysis", label: "AI Analysis" },
 ];
 
@@ -241,6 +248,33 @@ const Report = () => {
                 valuation={parsedReport.valuation}
                 risks={parsedReport.risks}
                 verdict={parsedReport.verdict}
+              />
+            </section>
+
+            <section id="analytics" className="grid gap-6 lg:grid-cols-[1fr_1fr] xl:grid-cols-[1fr_1fr_1fr]">
+              <GrowthAnalysis
+                growthScore={resolvedAnalysis?.scoreBreakdown?.growth}
+                growthDescription={resolvedAnalysis?.growthDescription}
+              />
+              <ProfitabilityAnalysis
+                profitabilityScore={resolvedAnalysis?.scoreBreakdown?.profitability}
+                profitabilityDescription={resolvedAnalysis?.profitabilityDescription}
+              />
+              <FinancialHealth
+                financialHealthScore={resolvedAnalysis?.scoreBreakdown?.financialHealth}
+                financialHealthDescription={resolvedAnalysis?.financialHealthDescription}
+              />
+              <RiskAssessment
+                riskScore={resolvedAnalysis?.scoreBreakdown?.risk}
+                riskDescription={resolvedAnalysis?.riskDescription}
+              />
+              <MarketSentiment
+                sentimentScore={resolvedAnalysis?.scoreBreakdown?.marketSentiment}
+                sentimentDescription={resolvedAnalysis?.sentimentDescription}
+              />
+              <TechnicalAnalysis
+                technicalScore={resolvedAnalysis?.scoreBreakdown?.technicalAnalysis}
+                technicalDescription={resolvedAnalysis?.technicalDescription}
               />
             </section>
 
