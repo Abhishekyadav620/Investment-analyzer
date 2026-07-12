@@ -81,7 +81,7 @@ const ReportHeader = ({
                 currentPrice !== undefined &&
                 currentPrice !== null &&
                 currentPrice !== "Not Available"
-                  ? `$${currentPrice}`
+                  ? currentPrice
                   : "Not Available"
               }
             />
