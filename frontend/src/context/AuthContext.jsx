@@ -4,7 +4,7 @@ import axios from "axios";
 const AuthContext = createContext(null);
 
 const JWT_STORAGE_KEY = "investai_jwt_token";
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api/auth";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }) => {
 
         if (token) {
           // Validate token with backend GET /api/auth/me
-          const response = await axios.get(`${API_URL}/me`, {
+          const response = await axios.get(`${API_URL}/api/auth/me`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -92,7 +92,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password, rememberMe = false) => {
     setIsLoading(true);
     try {
-      const response = await axios.post(`${API_URL}/login`, {
+      const response = await axios.post(`${API_URL}/api/auth/login`, {
         email,
         password,
       });
@@ -128,7 +128,7 @@ export const AuthProvider = ({ children }) => {
   const signup = async (name, email, password) => {
     setIsLoading(true);
     try {
-      const response = await axios.post(`${API_URL}/signup`, {
+      const response = await axios.post(`${API_URL}/api/auth/signup`, {
         name,
         email,
         password,
@@ -165,7 +165,7 @@ export const AuthProvider = ({ children }) => {
 
     try {
       // 1. Try to login
-      const response = await axios.post(`${API_URL}/login`, {
+      const response = await axios.post(`${API_URL}/api/auth/login`, {
         email: googleEmail,
         password: googlePassword,
       });
@@ -186,7 +186,7 @@ export const AuthProvider = ({ children }) => {
     } catch (loginErr) {
       // 2. If login fails (user does not exist yet), sign them up
       try {
-        const signupResponse = await axios.post(`${API_URL}/signup`, {
+        const signupResponse = await axios.post(`${API_URL}/api/auth/signup`, {
           name,
           email: googleEmail,
           password: googlePassword,
@@ -223,7 +223,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const startGoogleAuth = () => {
-    window.location.assign(`${API_URL}/google`);
+    window.location.assign(`${API_URL}/api/auth/google`);
   };
 
   return (
